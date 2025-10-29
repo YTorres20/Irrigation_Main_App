@@ -35,10 +35,10 @@ Irrigation-Main-App/
 ├── Post-Processing/ # Stores output from consolidation
 │
 ├── GUI/
-│ ├── main_gui.py # Main GUI logic and window setup
+│ ├── MainWindow.py # Main GUI logic and window setup
 │ ├── helper.py # Handles file operations and data logic
 │ ├── styler.py # Defines styling for GUI elements
-│ ├── Roboflow.py # Roboflow interface (future integration)
+│ ├── RecordWindow.py # Handles the Recordings process 
 │ │
 │ └── DataCollection/
 │   ├── Data/ # Stores captured images before consolidation

@@ -1,4 +1,4 @@
-from GUI.DataCollection.Recording.record_manual import Camera
+from Irrigation_Main_App.GUI.DataCollection.Recording.camera import Camera
 import GUI.DataCollection.Recording.consolidate as consolidate
 from pathlib import Path
 import time
