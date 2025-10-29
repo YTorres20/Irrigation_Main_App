@@ -79,10 +79,10 @@ python application.py
 
 ---
 ### Workflow
--Launch the GUI.
--Use the Recording feature to capture and save new images.
--Once moisture readings are available (in moistures.csv), run Consolidation.
--View or upload the consolidated results as needed.
+- Launch the GUI.
+- Use the Recording feature to capture and save new images.
+- Once moisture readings are available (in moistures.csv), run Consolidation.
+- View or upload the consolidated results as needed.
 
 ## Future Enhancements
 - **Roboflow integration:** Uploading and downloading datasets directly from the GUI
