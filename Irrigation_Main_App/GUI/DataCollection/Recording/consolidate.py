@@ -26,7 +26,7 @@ def ConsolidateData(image_folder: str, output_folder: str):
     imgs = sorted([f.name for f in path_to_images.iterdir() if f.suffix.lower() != ".csv"])
 
     entries = [(imgs[i],moistures[i]) for i in range(min(len(imgs), len(moistures)))]
-
+    
     for i, (img_name, moisture) in enumerate(entries, start=1):
         img_path = path_to_images / img_name
         img = Image.open(img_path)

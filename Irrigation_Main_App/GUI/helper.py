@@ -1,9 +1,8 @@
-from Irrigation_Main_App.GUI.DataCollection.Recording.camera import Camera
+from   GUI.DataCollection.Recording.camera import Camera
 import GUI.DataCollection.Recording.consolidate as consolidate
+import GUI.DataCollection.RoboFlow.roboflow as Robo
 from pathlib import Path
 import time
-import csv
-
 
 
 WELCOME_MESSAGE = "Welcome!"
@@ -13,7 +12,7 @@ ERROR_INPUT_TWO = "Invalid input!"
 DATA_PROMPT = "Enter the moisture (format: x.x, example: 1.3) or q to quit: "
 CONSOLIDATION_LABEL = "Consolidating..."
 CONSOLIDATION_ERROR_LABEL = "Data was not consolidated!"
-ROBOFLOW_UPLOAD_LABEL = "Please upload file to roblow from Post-Processing"
+ROBOFLOW_UPLOAD_LABEL = "Data has been uploaded to RoboFlow"
 
 VIDEO_WIDTH_LENGTH = (1280,720) # HD resolution
 
@@ -21,7 +20,7 @@ FOLDER_NAME = None
 STORAGE_PATH = "GUI/DataCollection/Data"
 OPEN_PATH = None
 
-POST_PROCESSING_PATH = "./Post-Processing"
+POST_PROCESSING_PATH = "GUI/DataCollection/Post-Processing"
 
 MOISTURE_DATA = []
 
@@ -74,3 +73,8 @@ def ConsolidateData():
     output_path = Path(POST_PROCESSING_PATH)/FOLDER_NAME
     completed = consolidate.ConsolidateData(image_folder=OPEN_PATH,output_folder=output_path)
     return completed
+
+def upload_data():
+    post_images = Path (POST_PROCESSING_PATH)/FOLDER_NAME
+    post_images = str(post_images)
+    Robo.upload_data(post_images,FOLDER_NAME)

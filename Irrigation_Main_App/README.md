@@ -9,9 +9,19 @@ It provides tools for recording images using a camera module, consolidating thos
 
 ## Features
 
+### User-Friendly GUI
+- Built using **CustomTkinter** for a modern interface.  
+- Provides intuitive dialogs and visual feedback.  
+- Modular layout allows easy extension for new tools (e.g., Roboflow upload, data visualization, etc.).  
+
+<img src="assets/MainWindow.png" alt="Main Window" width="500" height="500">
+
 ### Camera Recording
 - Captures and stores images directly from the connected camera.  
 - Automatically saves each captured image in the `GUI/DataCollection/Data` directory.  
+
+<img src="assets/DataCollection.png" alt="Data Collection" width="600" height="500">
+<img src="assets/UserInput.png" alt="User Input" width="500" height="500">
 
 ###  Data Consolidation
 - Combines recorded images with corresponding moisture readings stored in a CSV file (`moistures.csv`).  
@@ -19,10 +29,8 @@ It provides tools for recording images using a camera module, consolidating thos
 - Saves consolidated images into the `Post-Processing` folder.  
 - Prevents continuation if `moistures.csv` is empty or missing valid data.  
 
-### User-Friendly GUI
-- Built using **CustomTkinter** for a modern interface.  
-- Provides intuitive dialogs and visual feedback.  
-- Modular layout allows easy extension for new tools (e.g., Roboflow upload, data visualization, etc.).  
+<img src="assets/Consolidation.png" alt="Consolidation" width="500" height="500"> 
+<img src="assets/Consolidation_Error.png" alt="Consolidation Error" width="500" height="500">
 
 ---
 
@@ -30,23 +38,25 @@ It provides tools for recording images using a camera module, consolidating thos
 ```
 Irrigation-Main-App/
 │
-├── application.py # Main entry point to launch the GUI
-│
-├── Post-Processing/ # Stores output from consolidation
-│
+├── application.py
 ├── GUI/
-│ ├── MainWindow.py # Main GUI logic and window setup
-│ ├── helper.py # Handles file operations and data logic
-│ ├── styler.py # Defines styling for GUI elements
-│ ├── RecordWindow.py # Handles the Recordings process 
-│ │
-│ └── DataCollection/
-│   ├── Data/ # Stores captured images before consolidation
-│   └── Recordings/
-│     ├── camera.py # Handles image capture from camera
-│     └── consolidate.py # Merges moisture data with captured images
-│
-└── README.md # Project documentation
+│   ├── MainWindow.py
+│   ├── helper.py
+│   ├── styler.py
+│   ├── RecordWindow.py
+│   │
+│   └── DataCollection/
+│       ├── Data/               # Captured images
+│       ├── Post-Processing/    # Consolidated images + CSV
+│       ├── Recordings/
+│       │   ├── camera.py
+│       │   └── consolidate.py
+│       ├── RoboFlow/
+│       │   ├── roboflow.py     # Roboflow upload logic
+│       │   └── .env            # API key, workspace, project ID           
+│       └── YOLO/               
+│      
+└── README.md
 ```
 ---
 ### Create and Activate a Virtual Environment
@@ -85,7 +95,7 @@ python application.py
 - View or upload the consolidated results as needed.
 
 ## Future Enhancements
-- **Roboflow integration:** Uploading and downloading datasets directly from the GUI
+- **Roboflow integration:** Downloading datasets directly from the GUI
 - AI-based soil moisture prediction  
 
 ## Notes for Developers

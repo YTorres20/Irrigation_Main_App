@@ -148,6 +148,9 @@ def Roboflow(parent:ctk.CTkToplevel):
     robo_window.label.grid(row=0 , column=1)
 
     styler.StyleLabel(robo_window.label)
+
+    helper.upload_data()
+    
     
 
 
