@@ -10,9 +10,10 @@ BACK_GROUND_COLOR = "black"
 ERROR_TEXT_COLOR = "red"
 
 # Determine the correct font argument depending on OS
-FONT_ARG = "text_font" if sys.platform == "darwin" else "font"
+#FONT_ARG = "text_font" if sys.platform == "darwin" else "font"
 
 def StyleButton(button: ctk.CTkButton) -> None:
+    FONT_ARG = "text_font" if sys.platform == "darwin" else "font"
     button.configure(
         fg_color=PRIMARY_COLOR,
         text_color=TEXT_COLOR,
@@ -22,6 +23,7 @@ def StyleButton(button: ctk.CTkButton) -> None:
     )
 
 def StyleMainLabel(label: ctk.CTkLabel) -> None:
+    FONT_ARG = "text_font" if sys.platform == "darwin" else "font"
     label.configure(
         text_color=PRIMARY_COLOR,
         **{FONT_ARG: FONT_TITLE}
@@ -33,12 +35,14 @@ def StyleWindow(window: ctk.CTkToplevel) -> None:
     )
 
 def StyleLabel(label: ctk.CTkLabel) -> None:
+    FONT_ARG = "text_font" if sys.platform == "darwin" else "font"
     label.configure(
         text_color=TEXT_COLOR,
         **{FONT_ARG: FONT_MEDIUM}
     )
 
 def StyleErrorLabel(label: ctk.CTkLabel) -> None:
+    FONT_ARG = "text_font" if sys.platform == "darwin" else "font"
     label.configure(
         text_color=ERROR_TEXT_COLOR,
         **{FONT_ARG: FONT_MEDIUM}
