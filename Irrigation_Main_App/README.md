@@ -7,6 +7,25 @@ It provides tools for recording images using a camera module, consolidating thos
 
 ---
 
+## Recommended Python Version
+- `Python 3.12 `is required for full compatibility with all dependencies, including Pillow and CustomTkinter.
+- Using Python 3.13 or higher may cause build issues, especially with Pillow.
+
+### Tkinter Installation (if not already installed)
+
+macOS:
+```bash
+brew install python-tk
+```
+Linux (Debian):
+```bash
+sudo apt-get install python3-tk
+```
+
+`Windows: Usually comes pre-installed with Python 3.12. Skip this step if you don’t get errors.`
+
+---
+
 ## Features
 
 ### User-Friendly GUI
@@ -85,7 +104,7 @@ pip install -r requirements.txt
 ```bash
 python application.py
 ```
-`You can also use python3 application.py if your system requires it.`
+`You can also use python3 application.py or python3 -m pip install -r requirements.txt if your system requires it.`
 
 ---
 ### Workflow

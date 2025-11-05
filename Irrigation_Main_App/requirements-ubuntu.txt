@@ -1,0 +1,16 @@
+# GUI
+customtkinter==4.6.3
+
+Pillow==10.1.0
+
+# Image / camera processing
+opencv-python==4.8.1.78
+
+
+# AI / Data
+roboflow==1.2.11
+
+# Utilities
+python-dotenv==1.0.1
+numpy==1.26.4
+

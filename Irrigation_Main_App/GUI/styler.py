@@ -1,5 +1,5 @@
-import customtkinter as ctk 
-
+import customtkinter as ctk
+import sys
 
 PRIMARY_COLOR = "#1E90FF"
 TEXT_COLOR = "white"
@@ -9,37 +9,37 @@ FONT_MEDIUM = ("Arial", 12)
 BACK_GROUND_COLOR = "black"
 ERROR_TEXT_COLOR = "red"
 
-def StyleButton(button: ctk.CTkButton)-> None:
+# Determine the correct font argument depending on OS
+FONT_ARG = "text_font" if sys.platform == "darwin" else "font"
+
+def StyleButton(button: ctk.CTkButton) -> None:
     button.configure(
         fg_color=PRIMARY_COLOR,
         text_color=TEXT_COLOR,
         hover_color=HOVER_COLOR,
         corner_radius=10,
-        font=FONT_MEDIUM
-    )
-    
-def StyleMainLabel(label:ctk.CTkLabel) -> None:
-    label.configure(
-        text_color = PRIMARY_COLOR,
-        font = FONT_TITLE
+        **{FONT_ARG: FONT_MEDIUM}  
     )
 
-def StyleWindow(window:ctk.CTkToplevel) -> None: 
+def StyleMainLabel(label: ctk.CTkLabel) -> None:
+    label.configure(
+        text_color=PRIMARY_COLOR,
+        **{FONT_ARG: FONT_TITLE}
+    )
+
+def StyleWindow(window: ctk.CTkToplevel) -> None:
     window.configure(
-        fg_color = BACK_GROUND_COLOR,
-        entry_fg_color = PRIMARY_COLOR,
-        text = FONT_MEDIUM,
-        text_color = TEXT_COLOR,
+        fg_color=BACK_GROUND_COLOR
     )
 
-def StyleLabel(label:ctk.CTkLabel)-> None:
+def StyleLabel(label: ctk.CTkLabel) -> None:
     label.configure(
-        text_color = TEXT_COLOR,
-        font = FONT_MEDIUM
+        text_color=TEXT_COLOR,
+        **{FONT_ARG: FONT_MEDIUM}
     )
 
-def StyleErrorLabel(label:ctk.CTkLabel)-> None:
+def StyleErrorLabel(label: ctk.CTkLabel) -> None:
     label.configure(
-        text_color = ERROR_TEXT_COLOR,
-        font = FONT_MEDIUM
+        text_color=ERROR_TEXT_COLOR,
+        **{FONT_ARG: FONT_MEDIUM}
     )
