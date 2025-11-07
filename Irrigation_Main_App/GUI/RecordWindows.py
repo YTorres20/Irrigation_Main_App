@@ -72,7 +72,7 @@ def displayCamera(camera, window: ctk.CTkToplevel, image_label: ctk.CTkLabel) ->
     frame = helper.GetFrame(camera)
     video = ctk.CTkImage(light_image=frame, size=helper.VIDEO_WIDTH_LENGTH)
     image_label.configure(image=video)
-    window.after(1, lambda: displayCamera(camera, window, image_label))
+    window.after(10, lambda: displayCamera(camera, window, image_label))
 
 
 def GatherData(parent: ctk.CTkToplevel, entry: ctk.CTkEntry, data_window: ctk.CTkToplevel, camera_window: ctk.CTkToplevel, camera):
@@ -153,22 +153,5 @@ def Roboflow(parent: ctk.CTkToplevel):
     styler.StyleLabel(robo_window.label)
 
     helper.upload_data()
-
-    
-    
-
-
-
-
-
-
-    
-
-    
-
-
-
-
-
 
     

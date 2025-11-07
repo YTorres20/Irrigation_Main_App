@@ -3,7 +3,11 @@ import GUI.DataCollection.Recording.consolidate as consolidate
 import GUI.DataCollection.RoboFlow.roboflow as Robo
 from pathlib import Path
 import time
+import os
+import platform
+import cv2
 
+MOISTURE_DATA = []
 
 WELCOME_MESSAGE = "Welcome!"
 FILE_QUESTION = "Please enter the name of this recording's file: "
@@ -15,14 +19,34 @@ CONSOLIDATION_ERROR_LABEL = "Data was not consolidated!"
 ROBOFLOW_UPLOAD_LABEL = "Data has been uploaded to RoboFlow"
 
 VIDEO_WIDTH_LENGTH = (1280,720) # HD resolution
+CAMERA_SETTING = None
+CAMERA_BACKEND = None
 
 FOLDER_NAME = None
-STORAGE_PATH = "GUI/DataCollection/Data"
 OPEN_PATH = None
-
+STORAGE_PATH = "GUI/DataCollection/Data"
 POST_PROCESSING_PATH = "GUI/DataCollection/Post-Processing"
+PATH_TO_TOKENS = "GUI/DataCollection/RoboFlow/.env"
 
-MOISTURE_DATA = []
+def get_camera_device():
+    system = platform.system()
+    
+    if system == "Linux":
+        devices = [f"/dev/{d}" for d in os.listdir("/dev") if d.startswith("video")]
+        if not devices:
+            print("❌ No camera device found under /dev/")
+            return 0, cv2.CAP_V4L2
+        return devices[0], cv2.CAP_V4L2
+    
+    elif system == "Windows":
+        return 0, cv2.CAP_DSHOW
+    
+    elif system == "Darwin":
+        return 0, cv2.CAP_AVFOUNDATION
+    
+    else:
+        return 0, cv2.CAP_ANY
+
 
 def validate_input(user_input:str) -> bool: 
   user_input = user_input.strip()
@@ -35,14 +59,15 @@ def validate_input(user_input:str) -> bool:
       return False
            
 def TurnCameraOn() -> Camera:
-     return Camera()
+    global CAMERA_SETTING , CAMERA_BACKEND
+    CAMERA_SETTING, CAMERA_BACKEND = get_camera_device()
+    return Camera()
     
 def GetFrame(Camera_obj:Camera):
     Camera_obj.UpdateFrames()
     return Camera_obj.img
 
 def Snap(Camera_obj:Camera):
-
     file_name = OPEN_PATH / f"photo_{int(time.time())}.png"
     Camera_obj.img.save(file_name)
     print(f"✅ Photo saved: {file_name}")

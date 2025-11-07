@@ -1,7 +1,7 @@
 import customtkinter as ctk
 from . import styler
 from . import RecordWindows
-from. import helper
+from . import helper
 
 class app(ctk.CTk):
     def __init__(self, *args,**kwargs):

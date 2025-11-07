@@ -1,11 +1,11 @@
 import roboflow 
 import os
 from dotenv import load_dotenv
-
+import GUI.helper as helper
 
 def upload_data(path:str,batch_name:str)->None:
     
-    load_dotenv()
+    load_dotenv(helper.PATH_TO_TOKENS)
     key= os.getenv("ROBOFLOW_KEY")
     ID = os.getenv("PROJECT_ID")
     workspace = os.getenv("WORKSPACE")

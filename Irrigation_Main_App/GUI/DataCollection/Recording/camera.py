@@ -1,11 +1,12 @@
 
 import cv2
 from PIL import Image
+import GUI.helper as helper 
 
 class Camera ():
 	def __init__(self):	
 		#Webcam
-		self.cam  = cv2.VideoCapture(0)
+		self.cam  = cv2.VideoCapture(helper.CAMERA_SETTING, helper.CAMERA_BACKEND)
 		self.img = None
 
 		if not self.cam.isOpened():

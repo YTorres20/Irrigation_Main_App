@@ -86,10 +86,11 @@ source app/bin/activate
 Ubuntu requires some system packages for Python GUI and OpenCV:
 ```bash 
 sudo apt update
-sudo apt install python3-pip python3-tk ffmpeg libgl1 libsm6 libxext6 libxrender-dev -y
+sudo apt install python3-pip python3-tk ffmpeg libgl1 libsm6 libxext6 libxrender-dev v4l-utils -y
 ```
 - python3-tk is required for CustomTkinter.
 - ffmpeg and lib* packages are needed for OpenCV video/camera support.
+- v4l-utils provides Video4Linux support for external webcams.
 
 Upgrade pip, setuptools, and wheel:
 ```bash 

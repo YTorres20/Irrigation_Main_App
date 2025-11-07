@@ -5,26 +5,6 @@ The **Irrigation Main App** is a graphical user interface (GUI) built with **Pyt
 
 It provides tools for recording images using a camera module, consolidating those images with corresponding soil moisture readings, and preparing them for upload (e.g., to Roboflow for AI training).
 
----
-
-## Recommended Python Version
-- `Python 3.12 `is required for full compatibility with all dependencies, including Pillow and CustomTkinter.
-- Using Python 3.13 or higher may cause build issues, especially with Pillow.
-
-### Tkinter Installation (if not already installed)
-
-macOS:
-```bash
-brew install python-tk
-```
-Linux (Debian):
-```bash
-sudo apt-get install python3-tk
-```
-
-`Windows: Usually comes pre-installed with Python 3.12. Skip this step if you don’t get errors.`
-
----
 
 ## Features
 
@@ -77,26 +57,62 @@ Irrigation-Main-App/
 │      
 └── README.md
 ```
+
+---
+
+## Recommended Python Version
+- Python 3.11 is required for all platforms (macOS, Windows) to ensure full compatibility with dependencies like Pillow, CustomTkinter, and OpenCV.
+- Using Python 3.12 or higher may cause build or runtime errors.
+
+`Note: Users do not need to globally replace their system Python. The virtual environment handles the Python version.`
+
+### Installing Python 3.11
+Installing Python 3.11
+
+`macOS:`
+- Download the Python 3.11 macOS installer from [Python.org](https://www.python.org).
+- Run the installer — choose Standard Install.
+Verify:
+```bash 
+python3.11 --version
+```
+`Windows`
+- Download the Python 3.11 Windows installer from [Python.org](https://www.python.org).
+- Run the installer — check “Add Python to PATH”.
+Verify:
+```bash 
+py -3.11 --version
+```
 ---
 ### Create and Activate a Virtual Environment
-#### terminal command:
+` In terminal navigate to the project folder`
+
+on macOS:
 ```bash
-python -m venv venv
+python3.11 -m venv app
 ```
+
+On Windows:
+```bash
+py -3.11 -m venv app 
+```
+
 #### Activate Virtual Environment:
-- On macOS/Linux
+On macOS
 ```bash
-source venv/bin/activate     
+source app/bin/activate     
 ```
-- On Windows
+On Windows
 ```bash
-venv\Scripts\activate        
+.\app\Scripts\Activate.ps1  
 ```
-`You can also use python3 instead of python if needed.`
 
 ---
 
 ### Install Required Dependencies:
+```bash
+pip install --upgrade pip setuptools wheel
+```
 ```bash
 pip install -r requirements.txt
 ```
@@ -104,7 +120,7 @@ pip install -r requirements.txt
 ```bash
 python application.py
 ```
-`You can also use python3 application.py or python3 -m pip install -r requirements.txt if your system requires it.`
+`python3 application.py also works depending on your system.`
 
 ---
 ### Workflow
