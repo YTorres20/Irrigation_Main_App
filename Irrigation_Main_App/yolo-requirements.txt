@@ -1,0 +1,30 @@
+# Core ML + YOLO
+numpy>=1.22.2
+torchvision>=0.9.0
+opencv-python>=4.1.1
+PyYAML>=5.3.1
+tqdm>=4.64.0
+ultralytics>=8.0.147
+certifi>=2024.0.0
+torch>=2.0.0
+# Optional / useful extras
+matplotlib>=3.3
+pandas>=1.1.4
+seaborn>=0.11.0
+psutil
+thop>=0.1.1
+albumentations>=1.0.3
+tensorboard>=2.4.1
+
+# Export / deployment (optional, only if exporting models)
+onnx>=1.10.0
+onnx-simplifier>=0.4.1
+coremltools>=6.0
+
+# Misc
+gitpython>=3.1.30
+setuptools>=65.5.1
+requests>=2.23.0
+scipy>=1.4.1
+Pillow>=7.1.2
+

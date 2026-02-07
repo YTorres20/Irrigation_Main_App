@@ -1,35 +1,44 @@
 # Irrigation Main App
 
 ## Overview
-The **Irrigation Main App** is a graphical user interface (GUI) built with **Python** and **CustomTkinter** to assist with soil moisture data collection and image post-processing.  
+The **Irrigation Main App** is a graphical user interface (GUI) built with **Python** and **CustomTkinter** to assist with soil moisture data collection, image post-processing, and automated AI training.
 
-It provides tools for recording images using a camera module, consolidating those images with corresponding soil moisture readings, and preparing them for upload (e.g., to Roboflow for AI training).
+It provides an end-to-end workflow for recording images using a camera module, consolidating those images with corresponding soil moisture readings, and automatically triggering `YOLO training` using Roboflow-managed datasets.
 
 
 ## Features
 
-### User-Friendly GUI
-- Built using **CustomTkinter** for a modern interface.  
-- Provides intuitive dialogs and visual feedback.  
-- Modular layout allows easy extension for new tools (e.g., Roboflow upload, data visualization, etc.).  
+## User-Friendly GUI 
+- Built using CustomTkinter for a modern interface
+- Provides intuitive dialogs and visual feedback
+- Modular layout allows easy extension for new tools (Roboflow, training, visualization)
 
-<img src="assets/MainWindow.png" alt="Main Window" width="500" height="500">
+<img src="Assets/Images/MainWindow.png" alt="Main Window" width="500" height="500">
 
-### Camera Recording
-- Captures and stores images directly from the connected camera.  
-- Automatically saves each captured image in the `GUI/DataCollection/Data` directory.  
+## Camera Recording
+- Captures and stores images directly from the connected camera
+- Automatically saves each captured image in the data collection directory 
 
-<img src="assets/DataCollection.png" alt="Data Collection" width="600" height="500">
-<img src="assets/UserInput.png" alt="User Input" width="500" height="500">
+<img src="Assets/Images/DataCollection.png" alt="Data Collection" width="600" height="500">
+<img src="Assets/Images/UserInput.png" alt="User Input" width="500" height="500">
 
-###  Data Consolidation
-- Combines recorded images with corresponding moisture readings stored in a CSV file (`moistures.csv`).  
-- Draws the moisture value directly on each image.  
-- Saves consolidated images into the `Post-Processing` folder.  
-- Prevents continuation if `moistures.csv` is empty or missing valid data.  
+##  Data Consolidation
+- Combines recorded images with corresponding moisture readings stored in `moistures.csv`
+- Draws the moisture value directly onto each image
+- Saves consolidated images into the `Post-Processing` directory
+- Prevents continuation if `moistures.csv` is missing or empty 
 
-<img src="assets/Consolidation.png" alt="Consolidation" width="500" height="500"> 
-<img src="assets/Consolidation_Error.png" alt="Consolidation Error" width="500" height="500">
+<img src="Assets/Images/Consolidation.png" alt="Consolidation" width="500" height="500"> 
+<img src="Assets/Images/Consolidation_Error.png" alt="Consolidation Error" width="500" height="500">
+
+## Automated YOLO Training
+- Fully automated YOLO training pipeline integrated into the application
+- Consolidated images are prepared and validated automatically
+- Datasets are synced using Roboflow
+- YOLO training is triggered programmatically (no manual CLI commands)
+- Training runs and outputs are stored in `GUI/Collections/Training/Sessions`
+
+This enables a complete `data collection` → `Roboflow upload `→ `processing` → `training workflow` from a single GUI.
 
 ---
 
@@ -39,34 +48,67 @@ Irrigation-Main-App/
 │
 ├── application.py
 ├── GUI/
-│   ├── MainWindow.py
-│   ├── helper.py
-│   ├── styler.py
-│   ├── RecordWindow.py
-│   │
-│   └── DataCollection/
-│       ├── Data/               # Captured images
-│       ├── Post-Processing/    # Consolidated images + CSV
-│       ├── Recordings/
-│       │   ├── camera.py
-│       │   └── consolidate.py
-│       ├── RoboFlow/
-│       │   ├── roboflow.py     # Roboflow upload logic
-│       │   └── .env            # API key, workspace, project ID           
-│       └── YOLO/               
+|      ├── Collections/
+│      |              ├── Core/
+|      |              |       ├── path_manager.py
+|      |              |       ├── recorder.py
+|      |              |       ├── system_manager.py
+|      |              |       ├── trainer.py
+|      |              |
+|      |              ├── DataCollection/
+|      |              |                 ├── Data/
+|      |              |                 ├── Post-Processing/
+|      |              |                 ├── Processing/
+|      |              |                 |             ├── consolidate.py
+|      |              ├── Device/
+|      |              |         ├── camera.py
+|      |              |
+|      |              ├── RoboFlow/  
+|      |              |           ├── .env
+|      |              |           ├── roboflow.py              
+|      |              |
+|      |              ├── Training/
+|      |              |           ├── Sessions/
+│      │              |
+|      |              ├──YOLO/
+|      |
+│      └─ UI/
+│           ├── main_window.py
+│           ├── record_windows.py
+|           ├── training_windows.py
+|           ├── Utils/
+|                    ├── styler.py
+|                    ├── UI_settings.py
+|                    ├── validation.py
+│                  
+|
 │      
 └── README.md
 ```
 
 ---
-
+## Environment Variables
+- Roboflow is used for dataset management and automated YOLO training.
+- Create a `.env` file in:
+```
+GUI/Collections/RoboFlow/.env
+```
+Example:
+```
+ROBOFLOW_API_KEY=your_api_key_here
+WORKSPACE=your_workspace
+PROJECT_ID=your_project_id
+```
+These variables are required only for dataset upload and training-related features.
+---
 ## Recommended Python Version
 - Python 3.11 is required for all platforms (macOS, Windows) to ensure full compatibility with dependencies like Pillow, CustomTkinter, and OpenCV.
 - Using Python 3.12 or higher may cause build or runtime errors.
 
 `Note: Users do not need to globally replace their system Python. The virtual environment handles the Python version.`
+---
 
-### Installing Python 3.11
+## Installing Python 3.11
 Installing Python 3.11
 
 `macOS:`
@@ -84,7 +126,7 @@ Verify:
 py -3.11 --version
 ```
 ---
-### Create and Activate a Virtual Environment
+## Create and Activate a Virtual Environment
 ` In terminal navigate to the project folder`
 
 on macOS:
@@ -109,36 +151,51 @@ On Windows
 
 ---
 
-### Install Required Dependencies:
+## Install Required Dependencies:
 ```bash
 pip install --upgrade pip setuptools wheel
 ```
 ```bash
 pip install -r requirements.txt
 ```
+```bash
+pip install -r yolo-requirements.txt
+```
 ### Running the Application:
 ```bash
 python application.py
 ```
-`python3 application.py also works depending on your system.`
-
 ---
-### Workflow
-- Launch the GUI.
-- Use the Recording feature to capture and save new images.
-- Once moisture readings are available (in moistures.csv), run Consolidation.
-- View or upload the consolidated results as needed.
-
-## Future Enhancements
-- **Roboflow integration:** Downloading datasets directly from the GUI
-- AI-based soil moisture prediction  
-
-## Notes for Developers
-- The **camera** module uses OpenCV for image capture.  
-- The **consolidation** module checks for a valid CSV and prevents proceeding if the file is empty.  
-- The **helper.py** module:
-  - Connects messages and feedback to the GUI.
-  - Serves as the bridge between backend logic and the user interface.
+## Workflow
+- Launch the GUI
+- Record images using the camera module
+- Provide moisture readings via`moistures.csv`
+- Run consolidation to embed moisture values into images
+- Automatically upload the prepared dataset to Roboflow
+- Automatically trigger YOLO training
+- Review training sessions and outputs
+---
+## Error Handling & Safeguards
+- Consolidation blocked if `moistures.csv` is missing or empty
+- GUI-based error dialogs prevent crashes
+- Camera resources are safely released on window close
+- Centralized path management avoids filesystem errors
+- YOLO training will not start unless valid data exists
+---
+## Development Notes
+- UI logic is isolated under `GUI/UI`
+- Core logic and automation reside under `GUI/Collections`
+- File paths are centrally managed via `path_manager.py`
+- UI components do not directly access hardware or the filesystem
+- YOLO training is invoked programmatically, not via CLI
+---
+## Known Limitations
+- Currently supports a single camera device
+- Moisture values are provided externally via CSV
+- YOLO inference is not yet integrated into the live camera feed
+---
+### License
+- This project is intended for academic and research use.
 ---
 ### Author:
 Developed by **Yarely Torres** <br>

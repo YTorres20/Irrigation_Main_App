@@ -1,5 +1,6 @@
 import customtkinter as ctk
 
+# Centralized styling utilities for CustomTkinter UI components
 
 PRIMARY_COLOR = "#1E90FF"
 TEXT_COLOR = "black"
@@ -11,38 +12,36 @@ ERROR_TEXT_COLOR = "red"
 
 
 
-def StyleButton(button: ctk.CTkButton) -> None:
+def style_button(button: ctk.CTkButton) -> None:
  
     button.configure(
         fg_color=PRIMARY_COLOR,
-        text_color=TEXT_COLOR,
         hover_color=HOVER_COLOR,
         corner_radius=10,
         font=FONT_MEDIUM
         
     )
 
-def StyleMainLabel(label: ctk.CTkLabel) -> None:
+def style_main_label(label: ctk.CTkLabel) -> None:
     
     label.configure(
         text_color=PRIMARY_COLOR,
         font=FONT_TITLE
     )
 
-def StyleWindow(window: ctk.CTkToplevel) -> None:
+def style_window(window: ctk.CTkToplevel) -> None:
     window.configure(
         #fg_color=BACK_GROUND_COLOR
     )
 
-def StyleLabel(label: ctk.CTkLabel) -> None:
+def style_label(label: ctk.CTkLabel) -> None:
     
     label.configure(
-        text_color=TEXT_COLOR,
 	    font=FONT_MEDIUM
 
     )
 
-def StyleErrorLabel(label: ctk.CTkLabel) -> None:
+def style_error_label(label: ctk.CTkLabel) -> None:
  
     label.configure(
         text_color=ERROR_TEXT_COLOR,

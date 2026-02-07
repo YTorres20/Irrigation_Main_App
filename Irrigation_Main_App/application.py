@@ -1,6 +1,6 @@
-import customtkinter as ctk 
-from GUI.MainWindow import app 
+import customtkinter as ctk
+from GUI.UI.main_window import App
 
 if __name__== "__main__":
-    irrigation_app = app()
+    irrigation_app = App()
     irrigation_app.mainloop()

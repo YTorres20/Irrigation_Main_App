@@ -2,8 +2,12 @@ from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 import csv
 
-
-def ConsolidateData(image_folder: str, output_folder: str):
+def consolidate_data(image_folder: str, output_folder: str):
+    """
+    Reads moisture values from the CSV file and overlays values to corresponding images.
+    Saves proccessed images into output_folder. 
+    Returns true on success and false if no data is found. 
+    """
     path_to_images = Path(image_folder)
     post_processing_images = Path(output_folder)
     

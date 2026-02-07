@@ -25,6 +25,24 @@ import time
 from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
+import ssl
+import os
+
+# Override SSL for font downloads
+if not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None):
+    ssl._create_default_https_context = ssl._create_unverified_context
+
+import torch
+
+# Allow YOLO models to be loaded by PyTorch 2.6+ security settings
+try:
+    from models.yolo import Model
+    from models.common import Bottleneck, Concatenate, Conv, C3, SPP, Detect
+    torch.serialization.add_safe_globals([Model, Bottleneck, Concatenate, Conv, C3, SPP, Detect])
+except Exception:
+    # If the model classes aren't available in this scope yet, 
+    # we fall back to the "trusted" load method
+    pass
 
 try:
     import comet_ml  # must be imported before torch (if installed)
@@ -126,7 +144,14 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
     if pretrained:
         with torch_distributed_zero_first(LOCAL_RANK):
             weights = attempt_download(weights)  # download if not found locally
-        ckpt = torch.load(weights, map_location='cpu')  # load checkpoint to CPU to avoid CUDA memory leak
+        #ckpt = torch.load(weights, map_location='cpu')  # load checkpoint to CPU to avoid CUDA memory leak
+        # Use this to handle PyTorch 2.6+ security while staying compatible with older versions
+        try:
+            ckpt = torch.load(weights, map_location='cpu', weights_only=False)
+        except TypeError:
+        # This handles older PyTorch versions that don't recognize 'weights_only'
+            ckpt = torch.load(weights, map_location='cpu')
+
         model = Model(cfg or ckpt['model'].yaml, ch=3, nc=nc, anchors=hyp.get('anchors')).to(device)  # create
         exclude = ['anchor'] if (cfg or hyp.get('anchors')) and not resume else []  # exclude keys
         csd = ckpt['model'].float().state_dict()  # checkpoint state_dict as FP32
@@ -408,12 +433,18 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
             break  # must break all DDP ranks
 
         # end epoch ----------------------------------------------------------------------------------------------------
-    # end training -----------------------------------------------------------------------------------------------------
+         # end training -----------------------------------------------------------------------------------------------------
     if RANK in {-1, 0}:
         LOGGER.info(f'\n{epoch - start_epoch + 1} epochs completed in {(time.time() - t0) / 3600:.3f} hours.')
         for f in last, best:
             if f.exists():
-                strip_optimizer(f)  # strip optimizers
+                # --- ADDED SAFETY START ---
+                try:
+                    strip_optimizer(f)  # strip optimizers
+                except Exception as e:
+                    LOGGER.info(f'Final weight cleanup skipped (Security/Type error), but weights are saved!')
+                # --- ADDED SAFETY END ---
+                
                 if f is best:
                     LOGGER.info(f'\nValidating {f}...')
                     results, _, _ = validate.run(
@@ -437,7 +468,6 @@ def train(hyp, opt, device, callbacks):  # hyp is path/to/hyp.yaml or hyp dictio
 
     torch.cuda.empty_cache()
     return results
-
 
 def parse_opt(known=False):
     parser = argparse.ArgumentParser()
