@@ -51,19 +51,22 @@ class Trainer:
         with open (self._yaml_file,"w") as file:
             yaml.safe_dump(content,file)
 
-    def _train(self):
-        command = [
-            sys.executable,
-            str(self._paths.yolo_train_file),
-            "--img", "640",
-            "--batch","15",
-            "--epochs","100",
-            "--data",str(self._yaml_file),
-            "--weights","yolov5s.pt",
-            "--project", str(self._paths.training_result_path),
-        ]
-        subprocess.run(command,check=True)
-        print("\nTraining complete. Results are in the Training folder.\n")
+    def _train(self):   
+            from ultralytics import YOLO
+
+            model = YOLO("yolov5s.pt")
+            model.train(
+                data=str(self._yaml_file),
+                imgsz=640,
+                batch=-1,   # YOLO will automatically run a test to find the largest batch size your specific GPU can handle without crashing.
+                epochs=100,
+                project=str(self._paths.training_result_path),
+                exist_ok=True,
+                workers=4
+                )
+
+            print("\nTraining complete. Results are in the Training folder.\n")
+
 
 
 

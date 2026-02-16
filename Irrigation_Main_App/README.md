@@ -179,6 +179,16 @@ pip install -r yolo-requirements.txt
 python application.py
 ```
 ---
+## Windows Training Error: WinError 1114
+- If the app crashes with a DLL initialization error when starting YOLO, follow these steps to repair your system files:
+
+- Copy and paste this link into your web browser:
+```
+https://aka.ms/vs/17/release/vc_redist.x64.exe
+```
+- Run the Installer: Open the downloaded file and click "Install" or "Repair".
+- RESTART Your Computer: This step is mandatory for Windows to register the fixed system files.
+
 ## Workflow
 - Launch the GUI
 - Record images using the camera module
