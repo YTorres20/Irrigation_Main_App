@@ -114,39 +114,52 @@ Installing Python 3.11
 `macOS:`
 - Download the Python 3.11 macOS installer from [Python.org](https://www.python.org).
 - Run the installer — choose Standard Install.
-Verify:
+- Verify:
 ```bash 
 python3.11 --version
 ```
-`Windows`
-- Download the Python 3.11 Windows installer from [Python.org](https://www.python.org).
-- Run the installer — check “Add Python to PATH”.
-Verify:
-```bash 
+`Windows:`
+- Download Python 3.11 from: [Python.org](https://www.python.org).
+- During installation:
+    - Check “Add Python to PATH”
+    - Ensure “Install launcher for all users (recommended)” is enabled
+- `The Python Launcher (py) is installed with the official Python installer and is recommended for Windows users. It allows explicit selection of Python versions and prevents version conflicts.`
+- Verify:
+```bash
+python --version
+```
+- If Python 3.11 does not appear:
+```bash
 py -3.11 --version
 ```
 ---
 ## Create and Activate a Virtual Environment
 ` In terminal navigate to the project folder`
 
-on macOS:
+- on macOS:
 ```bash
 python3.11 -m venv app
 ```
 
-On Windows:
+- On Windows:
+- Option 1 – Standard Method:
 ```bash
-py -3.11 -m venv app 
+python -m venv app
 ```
+- Option 2 – Recommended (If Multiple Python Versions Are Installed):
+```bash
+py -3.11 -m venv app
+```
+`The Python Launcher (py) is recommended on Windows because it allows you to explicitly select Python 3.11 and prevents version conflicts if multiple Python versions are installed.`
 
 #### Activate Virtual Environment:
-On macOS
+- On macOS
 ```bash
 source app/bin/activate     
 ```
-On Windows
+- On Windows
 ```bash
-.\app\Scripts\Activate.ps1  
+.\app\Scripts\Activate
 ```
 
 ---
@@ -169,7 +182,7 @@ python application.py
 ## Workflow
 - Launch the GUI
 - Record images using the camera module
-- Provide moisture readings via`moistures.csv`
+- Provide moisture readings via `moistures.csv`
 - Run consolidation to embed moisture values into images
 - Automatically upload the prepared dataset to Roboflow
 - Automatically trigger YOLO training
