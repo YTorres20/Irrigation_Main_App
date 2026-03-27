@@ -165,6 +165,11 @@ source app/bin/activate
 ---
 
 ## Install Required Dependencies:
+- **macOS**
+```bash
+brew install cmake
+```
+---
 ```bash
 pip install --upgrade pip setuptools wheel
 ```
