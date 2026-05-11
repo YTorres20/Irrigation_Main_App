@@ -14,7 +14,7 @@ def consolidate_data(image_folder: str, output_folder: str):
     post_processing_images.mkdir(parents=True,exist_ok=True)
     
     moistures = []
-    with open (path_to_images/"moistures.csv", newline="") as csv_file:
+    with open (path_to_images/"Data.csv", newline="") as csv_file:
         reader = csv.reader(csv_file)
         try:
             header = next(reader)  # skip header
@@ -36,7 +36,7 @@ def consolidate_data(image_folder: str, output_folder: str):
         img = Image.open(img_path)
         draw = ImageDraw.Draw(img)
         moisture_value = float(moisture[0])  # extract and convert
-        draw.text((10, 10), f"Moisture: {round(moisture_value)}", fill=(255, 255, 0))
+        draw.text((10, 10), f"Data: {round(moisture_value)}", fill=(255, 255, 0))
         img.save(post_processing_images / f"{i}.jpg")
 
     return True

@@ -9,20 +9,24 @@ class RoboFlow():
     Handles authentication, dataset uploads, and dataset version
     generation/downloads from Roboflow for YOLO training.
     """
-    def __init__(self,token_path:str):
+    def __init__(self,token_path:str,mode:str):
         """
         Loads Roboflow credentials from a .env file and validates them.
         """
         load_dotenv(token_path)
-
-        self.key = os.getenv("ROBOFLOW_KEY")
-        self.ID = os.getenv("PROJECT_ID")
-        self.workspace = os.getenv("WORKSPACE")
-        self.downloaded_data_name = None 
+        if mode == "soil":
+            self.key = os.getenv("SOIL_ROBOFLOW_KEY")
+            self.ID = os.getenv("SOIL_PROJECT_ID")
+            self.workspace = os.getenv("SOIL_WORKSPACE")
+        elif mode =="vegetable":
+            self.key = os.getenv("VEG_ROBOFLOW_KEY")
+            self.ID = os.getenv("VEG_PROJECT_ID")
+            self.workspace = os.getenv("VEG_WORKSPACE")
 
         if not self.key or not self.ID or not self.workspace:
             raise ValueError("Make sure ROBOFLOW_KEY, WORKSPACE, and PROJECT_ID are set in .env")
         
+
     def upload_data(self,path:str,batch_name:str)->None:
 
         rf = roboflow.Roboflow(api_key=self.key)

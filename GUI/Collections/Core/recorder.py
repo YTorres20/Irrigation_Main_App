@@ -13,21 +13,28 @@ class Recorder():
     """
     def __init__(self,paths):
       self._paths = paths 
-      self._csv_name = "moistures.csv"
-      self._moisture_data = []
+      self._csv_name = "Data.csv"
+      self._data = []
 
-    def record(self,data:float):
+    def record(self,data):
         """
         Records a single numeric entry into memory
         """
-        self._moisture_data.append(data)
+        self._data.append(data)
 
-    def create_csv(self):
+    def create_csv(self,mode):
        self._data_path = self._paths.data_path/self._csv_name
-       with open(self._data_path,"w") as f:
-           f.write("Moisture\n")
-           for mo in self._moisture_data:
-               f.write(f"{mo}\n")
+       if mode == "soil":
+        with open(self._data_path,"w") as f:
+            f.write("Moisture\n")
+            for mo in self._data:
+                f.write(f"{mo}\n")
+       elif mode == "vegetable":
+          with open(self._data_path,"w") as f:
+            f.write("Healthy\n")
+            for he in self._data:
+                f.write(f"{he}\n")
+          
 
     def consolidation(self) -> bool:
         """
@@ -36,8 +43,8 @@ class Recorder():
         """
         return consolidate_data(self._paths.data_path,self._paths.post_path)
 
-    def upload_data(self):
-        robo = RoboFlow(self._paths.token_path)
+    def upload_data(self,mode):
+        robo = RoboFlow(self._paths.token_path,mode)
         robo.upload_data(self._paths.post_path,self._paths.recording_name)
         print("\nUpload complete\n")
         

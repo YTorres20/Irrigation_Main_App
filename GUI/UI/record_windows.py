@@ -72,8 +72,12 @@ class RecordingSession:
         self.data_window.transient(self.app)
         self.data_window.update()  
         self.data_window.grab_set() # modal 
-    
-        self.data_window.label = ctk.CTkLabel(self.data_window, text=constant.DATA_PROMPT)
+        
+        if self.app.mode == "soil":
+            self.data_window.label = ctk.CTkLabel(self.data_window, text=constant.DATA_PROMPT_SOIL)
+        elif self.app.mode == "vegetable":
+            self.data_window.label = ctk.CTkLabel(self.data_window, text=constant.DATA_PROMPT_VEGETABLE)
+
         self.data_window.label.grid(row=0, column=0)
         self.data_window.entry = ctk.CTkEntry(self.data_window)
         self.data_window.entry.grid(row=0, column=1, padx=10, pady=10)
@@ -123,14 +127,20 @@ class RecordingSession:
             self.after_id = None
             self.data_window = None
             self.camera_window = None
-            self.app.recorder.create_csv()
+            self.app.recorder.create_csv(self.app.mode)
             self._consolidate()
             return
         if hasattr(self.data_window, "input_error_label") and self.data_window.input_error_label:
             self.data_window.input_error_label.destroy()
             self.data_window.input_error_label = None
         try:
-            data = float(data)
+            if self.app.mode == "soil":
+                data = float(data)
+            elif self.app.mode =="vegetable":
+                data = int(data)
+                if data < 0 or data > 1 :
+                    raise ValueError
+                
         except ValueError:
             self.data_window.input_error_label = ctk.CTkLabel(self.data_window, text=constant.ERROR_INPUT_TWO)
             self.data_window.input_error_label.grid(row=1, column=0)
@@ -194,7 +204,7 @@ class RecordingSession:
        Uploads consolidated data to RoboFlow and bring terminal to the front. 
        """
        self.app.system.bring_terminal_to_front()
-       self.app.recorder.upload_data()
+       self.app.recorder.upload_data(self.app.mode)
        print("If done, please exit.")
 
 

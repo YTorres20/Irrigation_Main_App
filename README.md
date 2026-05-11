@@ -1,9 +1,9 @@
 # Irrigation Main App
 
 ## Overview
-The **Irrigation Main App** is a graphical user interface (GUI) built with **Python** and **CustomTkinter** to assist with soil moisture data collection, image post-processing, and automated AI training.
+The **Irrigation Main App** is a graphical user interface (GUI) built with **Python** and **CustomTkinter** to assist with data collection, image post-processing, and automated AI training.
 
-It provides an end-to-end workflow for recording images using a camera module, consolidating those images with corresponding soil moisture readings, and automatically triggering `YOLO training` using Roboflow-managed datasets.
+It provides an end-to-end workflow for recording images using a camera module, consolidating those images with corresponding data readings, and automatically triggering `YOLO training` using Roboflow-managed datasets.
 
 
 ## Features
@@ -13,7 +13,7 @@ It provides an end-to-end workflow for recording images using a camera module, c
 - Provides intuitive dialogs and visual feedback
 - Modular layout allows easy extension for new tools (Roboflow, training, visualization)
 
-<img src="Assets/Images/MainWindow.png" alt="Main Window" width="500" height="500">
+<img src="Assets/Images/MainMenu.png" alt="Main Window" width="500" height="500">
 
 ## Camera Recording
 - Captures and stores images directly from the connected camera

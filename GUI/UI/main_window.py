@@ -27,6 +27,8 @@ class App(ctk.CTk):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.mode = None
+
         # System-level manager (OS, platform-specific behavior)
         self.system = SystemManager()
 
@@ -48,39 +50,85 @@ class App(ctk.CTk):
         self.welcome_label = ctk.CTkLabel(self, text=constant.WELCOME_MESSAGE)
         self.welcome_label.grid(row=0, column=1)
 
-        # Entry point for data collections
-        self.record_button = ctk.CTkButton(
-            self,
-            text="Record Data",
-            command=self.open_record_windows
-        )
-        self.record_button.grid(row=1, column=1, padx=20, pady=20)
+        self.set_up_grid(weights=1)
+        self.main_button_frame = ctk.CTkFrame(self)
+        self.main_button_frame.grid(row=1,column=1)
 
-        # Entry for AI-training 
-        self.YOLO_button = ctk.CTkButton(
-            self,
-            text="Run YOLO",
-            command=self.open_training_windows
+       ######### Entry point for soil moisture collections #######
+        self.soil_button = ctk.CTkButton(
+            self.main_button_frame,
+            text="Soil Moisture",
+            command=self.show_soil_menu
         )
-        self.YOLO_button.grid(row=2, column=1, padx=20, pady=20)
+        self.soil_button.grid(padx=10, pady=10)
+
+        self.veg_button = ctk.CTkButton(
+            self.main_button_frame,
+            text="Vegetable Health",
+            command=self.show_veg_menu
+        )
+        self.veg_button.grid()
+
+
 
         # Apply centralized styling to UI components
-        styler.style_button(self.record_button)
-        styler.style_button(self.YOLO_button)
+        styler.style_button(self.soil_button)
+        styler.style_button(self.veg_button)
         styler.style_main_label(self.welcome_label)
         styler.style_window(self)
 
-        # Configure grid layout to center content vertically and horizontally
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_rowconfigure(1, weight=0)
-        self.grid_rowconfigure(2, weight=0)
-        self.grid_rowconfigure(3, weight=1)
-
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_columnconfigure(1, weight=0)
-        self.grid_columnconfigure(2, weight=0)
-        self.grid_columnconfigure(3, weight=1)
+        
     
+    def show_soil_menu(self):
+        self.clear_window()
+        self.mode = "soil"
+
+        self.menu_frame = ctk.CTkFrame(self)
+        self.menu_frame.grid(row=1,column=1)
+
+        self.record_button = ctk.CTkButton(
+            self.menu_frame,
+            text="Record Data",
+            command=self.open_record_windows
+        )
+        self.record_button.grid(padx=10, pady=10)
+
+        # Entry for AI-training 
+        self.YOLO_button = ctk.CTkButton(
+            self.menu_frame,
+            text="Run YOLO",
+            command=self.open_training_windows
+        )
+        self.YOLO_button.grid()
+
+        styler.style_button(self.record_button)
+        styler.style_button(self.YOLO_button)
+
+    def show_veg_menu(self):
+        self.clear_window()
+        self.mode = "vegetable"
+
+        self.menu_frame = ctk.CTkFrame(self)
+        self.menu_frame.grid(row=1,column=1)
+
+        self.record_button = ctk.CTkButton(
+            self.menu_frame,
+            text="Record Data",
+            command=self.open_record_windows
+        )
+        self.record_button.grid(padx=10, pady=10)
+
+        styler.style_button(self.record_button)
+
+
+    # Configure grid layout to center content vertically and horizontally
+    def set_up_grid(self,rows=3,columns=3, weights=0):
+        for r in range(rows):
+            self.grid_rowconfigure(r,weight=weights)
+        for c in range(columns):
+            self.grid_columnconfigure(c,weight=weights)
+
+
     def open_record_windows(self):
         """
         Launches the recording session window.
@@ -96,5 +144,8 @@ class App(ctk.CTk):
         """
         session = TrainingSession(self)
         session.set_training_session()
-
-
+    
+    def clear_window(self):
+        for widgets in self.winfo_children():
+            widgets.destroy()
+    

@@ -2,9 +2,10 @@ import customtkinter as ctk
 
 # Centralized styling utilities for CustomTkinter UI components
 
-PRIMARY_COLOR = "#1E90FF"
+MAIN_LABEL_COLOR = "#0080FE"
+PRIMARY_COLOR = "#0F52BA"
 TEXT_COLOR = "black"
-HOVER_COLOR = "#104E8B"
+HOVER_COLOR = "#000080"
 FONT_TITLE = ("Arial", 40)
 FONT_MEDIUM = ("Arial", 12)
 BACK_GROUND_COLOR = "black"
@@ -25,7 +26,7 @@ def style_button(button: ctk.CTkButton) -> None:
 def style_main_label(label: ctk.CTkLabel) -> None:
     
     label.configure(
-        text_color=PRIMARY_COLOR,
+        text_color=MAIN_LABEL_COLOR,
         font=FONT_TITLE
     )
 
